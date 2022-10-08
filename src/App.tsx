@@ -1,9 +1,7 @@
+import Main from "./modules"
+
 function App() {
-  return (
-    <div>
-      <h1>Shop Services</h1>
-    </div>
-  )
+  return <Main />
 }
 
 export default App
