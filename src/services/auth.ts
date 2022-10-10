@@ -1,13 +1,18 @@
 import axios from 'axios'
-import { User } from '../interfaces/User'
+import { ILogin, IRegister, User } from '@/interfaces/User'
 
 const BASE_URL = 'http://localhost:3000/api/v1/auth'
 
-export const LoginService = (data: User) => {
-	return axios.post(`${BASE_URL}/login`, data)
+interface IResponse {
+	msg?: string
+	user: User
+	token?: string
 }
 
-export const RegisterService = (data: User) => {
-	console.log(data)
-	return axios.post(`${BASE_URL}/register`, data)
+export const LoginService = (data: ILogin) => {
+	return axios.post<IResponse>(`${BASE_URL}/login`, data)
+}
+
+export const RegisterService = (data: IRegister) => {
+	return axios.post<IResponse>(`${BASE_URL}/register`, data)
 }

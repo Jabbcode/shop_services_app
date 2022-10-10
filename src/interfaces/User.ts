@@ -6,3 +6,10 @@ export interface User {
 	email: string
 	password: string
 }
+
+export interface ILogin {
+	email: string
+	password: string
+}
+
+export interface IRegister extends User {}

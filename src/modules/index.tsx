@@ -1,9 +1,7 @@
-import { Router } from '../routers'
+import { Router } from '@/routers'
 
 const Main = () => {
-  return (
-    <Router />
-  )
+	return <Router />
 }
 
 export default Main
