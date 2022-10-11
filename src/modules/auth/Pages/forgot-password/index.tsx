@@ -3,7 +3,7 @@ import React from 'react'
 import { useState } from 'react'
 import { InputWithErrors } from '@/components'
 import Swal from 'sweetalert2'
-import { ForgotPasswordServive } from '@/services/auth'
+import { ForgotPasswordServive } from '@/services/auth.services'
 
 export const ForgotPassword = () => {
 	const {

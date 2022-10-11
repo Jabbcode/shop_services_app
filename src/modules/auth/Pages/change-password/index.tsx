@@ -1,51 +1,42 @@
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
 import { useForm, SubmitHandler } from 'react-hook-form'
-
-import Swal from 'sweetalert2'
-
-import { ILogin } from '@/interfaces/User'
-import { LoginService } from '@/services/auth.services'
+import { useState } from 'react'
 import { InputWithErrors } from '@/components'
-import { setStateBoolean } from '@/interfaces/types'
+import Swal from 'sweetalert2'
+import { ChangePasswordService } from '@/services/auth.services'
+import { IChangePassword } from '@/interfaces/User'
 
-interface IProps {
-	setLogged: setStateBoolean
-}
-
-export const Login = ({ setLogged }: IProps) => {
-	const navigate = useNavigate()
-
+export const ChangePassword = () => {
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<ILogin>()
+	} = useForm<IChangePassword>()
 
-	const [stateForm, setStateForm] = useState<ILogin>({
+	const [stateForm, setStateForm] = useState<IChangePassword>({
 		email: '',
 		password: '',
+		new_password: '',
 	})
+	// const [sentEmail, setSentEmail] = useState<boolean>(false)
 
 	const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setStateForm({
 			...stateForm,
-			[e.target.name]: e.target.value,
+			[e.target.name]: e.target.name,
 		})
 	}
 
-	const onSubmit: SubmitHandler<ILogin> = async () => {
+	const onSubmit: SubmitHandler<IChangePassword> = async () => {
 		try {
-			const { data } = await LoginService(stateForm)
+			const response = await ChangePasswordService(stateForm)
 			Swal.fire({
 				position: 'center',
 				icon: 'success',
-				title: data.msg,
+				title: response.data.msg,
 				showConfirmButton: false,
 				timer: 1500,
 			})
-			setLogged(true)
-			navigate('/home', { replace: true })
+			// setSentEmail(true)
 		} catch (error: any) {
 			if (error.response.data.msg) {
 				console.log(error.response.data.msg)
@@ -77,7 +68,7 @@ export const Login = ({ setLogged }: IProps) => {
 				<div className="col-12">
 					<div className="card">
 						<div className="card-header">
-							<h4>Iniciar Sesion</h4>
+							<h4>Cambiar su contraseña</h4>
 						</div>
 						<div className="card-body">
 							<form onSubmit={handleSubmit(onSubmit)}>
@@ -88,38 +79,35 @@ export const Login = ({ setLogged }: IProps) => {
 									errors={errors}
 									register={register}
 									onChange={handleOnChange}
-									stateForm={stateForm}
+									stateForm={stateForm.email}
 								/>
 
 								<InputWithErrors
-									label="Contraseña"
+									label="Contraseña actual"
 									type="password"
 									name="password"
 									errors={errors}
 									register={register}
 									onChange={handleOnChange}
-									stateForm={stateForm}
+									stateForm={stateForm.email}
 								/>
+
+								<InputWithErrors
+									label="Nueva contraseña Contraseña"
+									type="password"
+									name="new_password"
+									errors={errors}
+									register={register}
+									onChange={handleOnChange}
+									stateForm={stateForm.email}
+								/>
+
 								<div className="d-grid mt-3	">
 									<button className="btn btn-primary" type="submit">
-										Iniciar Sesion
+										Actualizar
 									</button>
 								</div>
 							</form>
-						</div>
-					</div>
-				</div>
-				<div className="mt-3">
-					<div className="row m-auto">
-						<div className="col-12">
-							<div className="d-flex justify-content-between">
-								<Link to="/register" className="text-center">
-									Ir al Registro
-								</Link>
-								<Link to="/forgot-password" className="text-center">
-									¿Olvido su Contraseña?
-								</Link>
-							</div>
 						</div>
 					</div>
 				</div>

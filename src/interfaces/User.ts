@@ -5,6 +5,7 @@ export interface User {
 	address: string
 	email: string
 	password: string
+	email_validated?: boolean
 }
 
 export interface ILogin {
@@ -17,4 +18,10 @@ export interface IRegister extends User {}
 export interface INewPassword {
 	new_password: string
 	rePassword: string
+}
+
+export interface IChangePassword {
+	email: string
+	password: string
+	new_password: string
 }
