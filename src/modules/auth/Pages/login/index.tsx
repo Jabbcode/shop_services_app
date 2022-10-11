@@ -4,10 +4,10 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 
 import Swal from 'sweetalert2'
 
-import { ILogin } from '@/interfaces/User'
+import { ILogin } from '@/modules/auth/interfaces/User'
 import { LoginService } from '@/services/auth.services'
 import { InputWithErrors } from '@/components'
-import { setStateBoolean } from '@/interfaces/types'
+import { setStateBoolean } from '@/modules/auth/interfaces/types'
 
 interface IProps {
 	setLogged: setStateBoolean

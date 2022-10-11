@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
 import { LoadingCircle } from '@/components/LoadingCircle'
-import { setStateBoolean } from '@/interfaces/types'
+import { setStateBoolean } from '@/modules/auth/interfaces/types'
 import { VeryEmailService } from '@/services/auth.services'
 
 interface IProps {

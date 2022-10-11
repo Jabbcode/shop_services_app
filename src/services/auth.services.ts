@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { IChangePassword, ILogin, IRegister, User } from '@/interfaces/User'
+import { IChangePassword, ILogin, IRegister, User } from '@/modules/auth/interfaces/User'
 
 const BASE_URL = 'http://localhost:3000/api/v1/auth'
 

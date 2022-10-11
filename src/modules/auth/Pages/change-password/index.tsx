@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { InputWithErrors } from '@/components'
 import Swal from 'sweetalert2'
 import { ChangePasswordService } from '@/services/auth.services'
-import { IChangePassword } from '@/interfaces/User'
+import { IChangePassword } from '@/modules/auth/interfaces/User'
 
 export const ChangePassword = () => {
 	const {

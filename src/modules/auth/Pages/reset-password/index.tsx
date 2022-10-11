@@ -5,7 +5,7 @@ import { InputWithErrors } from '@/components'
 import Swal from 'sweetalert2'
 import { NewPasswordService } from '../../../../services/auth.services'
 import { useNavigate, useParams } from 'react-router-dom'
-import { INewPassword } from '@/interfaces/User'
+import { INewPassword } from '@/modules/auth/interfaces/User'
 
 export const ResetPassword = () => {
 	const { token } = useParams()

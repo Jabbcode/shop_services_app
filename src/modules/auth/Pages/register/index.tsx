@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import Swal from 'sweetalert2'
 
-import { IRegister } from '@/interfaces/User'
+import { IRegister } from '@/modules/auth/interfaces/User'
 import { RegisterService } from '@/services/auth.services'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { InputWithErrors } from '@/components'
