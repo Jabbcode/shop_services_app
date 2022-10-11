@@ -34,7 +34,6 @@ export const Register = () => {
 	const onSubmit: SubmitHandler<IRegister> = async () => {
 		try {
 			const { data } = await RegisterService(stateForm)
-			console.log(data)
 
 			Swal.fire({
 				position: 'center',
