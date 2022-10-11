@@ -16,3 +16,19 @@ export const LoginService = (data: ILogin) => {
 export const RegisterService = (data: IRegister) => {
 	return axios.post<IResponse>(`${BASE_URL}/register`, data)
 }
+
+export const ForgotPasswordServive = (data: String) => {
+	return axios.post<IResponse>(`${BASE_URL}/forgot-password`, { email: data })
+}
+
+export const NewPasswordService = (data: String, token: string) => {
+	return axios.post<IResponse>(
+		`${BASE_URL}/new-password`,
+		{ new_password: data },
+		{
+			headers: {
+				'x-access-token': token,
+			},
+		}
+	)
+}

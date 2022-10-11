@@ -1,31 +1,28 @@
-import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
 import { useForm, SubmitHandler } from 'react-hook-form'
-
-import Swal from 'sweetalert2'
-
-import { ILogin } from '@/interfaces/User'
-import { LoginService } from '@/services/auth'
+import React from 'react'
+import { useState } from 'react'
 import { InputWithErrors } from '@/components'
-import { setStateBoolean } from '@/interfaces/types'
+import Swal from 'sweetalert2'
+import { NewPasswordService } from '../../../../services/auth'
+import { useNavigate, useParams } from 'react-router-dom'
+import { INewPassword } from '@/interfaces/User'
 
-interface IProps {
-	setLogged: setStateBoolean
-}
-
-export const Login = ({ setLogged }: IProps) => {
+export const ResetPassword = () => {
+	const { token } = useParams()
 	const navigate = useNavigate()
 
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<ILogin>()
+	} = useForm<INewPassword>()
 
-	const [stateForm, setStateForm] = useState<ILogin>({
-		email: '',
-		password: '',
+	const [stateForm, setStateForm] = useState<INewPassword>({
+		new_password: '',
+		rePassword: '',
 	})
+
+	// const [sentEmail, setSentEmail] = useState<boolean>(false)
 
 	const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setStateForm({
@@ -34,19 +31,21 @@ export const Login = ({ setLogged }: IProps) => {
 		})
 	}
 
-	const onSubmit: SubmitHandler<ILogin> = async () => {
+	const onSubmit: SubmitHandler<INewPassword> = async () => {
+		console.log(stateForm)
+
 		try {
-			const { data } = await LoginService(stateForm)
+			const response = await NewPasswordService(stateForm.new_password, String(token))
 			Swal.fire({
 				position: 'center',
 				icon: 'success',
-				title: data.msg,
+				title: response.data.msg,
 				showConfirmButton: false,
 				timer: 1500,
 			})
-			setLogged(true)
-			navigate('/home', { replace: true })
+			navigate('/login', { replace: true })
 		} catch (error: any) {
+			console.log(error)
 			if (error.response.data.msg) {
 				console.log(error.response.data.msg)
 
@@ -77,49 +76,36 @@ export const Login = ({ setLogged }: IProps) => {
 				<div className="col-12">
 					<div className="card">
 						<div className="card-header">
-							<h4>Iniciar Sesion</h4>
+							<h4>Restablece tu contraseña</h4>
 						</div>
 						<div className="card-body">
 							<form onSubmit={handleSubmit(onSubmit)}>
 								<InputWithErrors
-									label="Correo Electronico"
-									type="text"
-									name="email"
+									label="Contraseña"
+									type="password"
+									name="new_password"
 									errors={errors}
 									register={register}
 									onChange={handleOnChange}
-									stateForm={stateForm}
+									stateForm={stateForm.new_password}
 								/>
 
 								<InputWithErrors
-									label="Contraseña"
+									label="Repetir Contraseña"
 									type="password"
-									name="password"
+									name="rePassword"
 									errors={errors}
 									register={register}
 									onChange={handleOnChange}
-									stateForm={stateForm}
+									stateForm={stateForm.rePassword}
 								/>
+
 								<div className="d-grid mt-3	">
 									<button className="btn btn-primary" type="submit">
-										Iniciar Sesion
+										Enviar
 									</button>
 								</div>
 							</form>
-						</div>
-					</div>
-				</div>
-				<div className="mt-3">
-					<div className="row m-auto">
-						<div className="col-12">
-							<div className="d-flex justify-content-between">
-								<Link to="/register" className="text-center">
-									Ir al Registro
-								</Link>
-								<Link to="/forgot-password" className="text-center">
-									¿Olvido su Contraseña?
-								</Link>
-							</div>
 						</div>
 					</div>
 				</div>

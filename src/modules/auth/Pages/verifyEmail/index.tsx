@@ -1,11 +1,18 @@
-import { useParams } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
-import { useEffect } from 'react'
+import Swal from 'sweetalert2'
 
-export const VerifyEmail = () => {
+import { LoadingCircle } from '@/components/LoadingCircle'
+import { setStateBoolean } from '@/interfaces/types'
+
+interface IProps {
+	setLogged: setStateBoolean
+}
+
+export const VerifyEmail = ({ setLogged }: IProps) => {
 	const { token } = useParams()
-
-	console.log(token)
+	const navigate = useNavigate()
 
 	const handleVerified = async () => {
 		try {
@@ -14,7 +21,19 @@ export const VerifyEmail = () => {
 					'x-access-token': token,
 				},
 			})
-			console.log(response)
+			if (response.data.user.email_validated === true) {
+				setLogged(true)
+				navigate('/home', { replace: true })
+			} else {
+				Swal.fire({
+					position: 'center',
+					icon: 'success',
+					title: 'Algo malo ocurrio papa...',
+					showConfirmButton: false,
+					timer: 1500,
+				})
+				navigate('/login', { replace: true })
+			}
 		} catch (error) {
 			console.log(error)
 		}
@@ -24,9 +43,5 @@ export const VerifyEmail = () => {
 		handleVerified()
 	}, [])
 
-	return (
-		<div>
-			<h2>Verificando papa...</h2>
-		</div>
-	)
+	return <LoadingCircle />
 }
