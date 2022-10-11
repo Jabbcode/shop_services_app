@@ -6,5 +6,5 @@ interface IPropsRoute {
 }
 
 export const PublicRoute = ({ children, logged }: IPropsRoute) => {
-	return logged ? <Navigate replace to="/home" /> : children
+	return logged ? <Navigate replace to="/dashboard" /> : children
 }

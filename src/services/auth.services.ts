@@ -25,7 +25,7 @@ export const VeryEmailService = (token: string) => {
 	})
 }
 
-export const ForgotPasswordServive = (data: string) => {
+export const ForgotPasswordServive = (data: String) => {
 	return axios.post<IResponse>(`${BASE_URL}/forgot-password`, { email: data })
 }
 
