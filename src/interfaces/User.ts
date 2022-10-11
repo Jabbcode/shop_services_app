@@ -13,3 +13,8 @@ export interface ILogin {
 }
 
 export interface IRegister extends User {}
+
+export interface INewPassword {
+	new_password: string
+	rePassword: string
+}
